@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Отчет о выполненной работе</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            -webkit-min-logical-width: calc(100% - 20px);
+            min-width: calc(100% - 20px);
+            max-width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        select {
+            -webkit-min-logical-width: calc(100% - 20px);
+            min-width: calc(100% - 10px);
+            max-width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
 
+<h1>Отчет о выполненной работе</h1>
+<form id="sickLeaveForm">
+    <label  for="name" style="color: #333; font-weight: bold;"> ФИО работника:</label>
+    <input type="text" id="name" placeholder="например: Иванов И.И." required>
+
+    <label for="options" style="color: #333; font-weight: bold;">Год выполнения заказ:</label>
+    <select id="options" name="options" required>
+        <option value="option1">2023</option>
+        <option value="option2">2024</option>
+    </select>
+
+    <label for="NumberOrder" style="color: #333; font-weight: bold;">Номер заказа:</label>
+    <input type="text" id="NumberOrder" placeholder="например: 07250" required >
+
+    <label for="AddressOrder" style="color: #333; font-weight: bold;">Адрес заказа</label>
+    <input type="text" id="AddressOrder" placeholder="например: улица Михаила Иванова, дом 9" required>
+
+    <label for="NoteOrder" style="color: #333; font-weight: bold;">Примечание</label>
+    <input type="text" id="NoteOrder" placeholder="например: 3 здания или Приостановка: ..." required>
+
+    <button type="submit">Отправить</button>
+</form>
+
+<script src="https://telegram.org/js/telegram-web-app.js"> </script>
+
+<script>
+    tg = window.Telegram.WebApp;
+    tg.expand();
+
+    document.getElementById('sickLeaveForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Получаем данные из полей формы
+        const name = document.getElementById('name').value;
+        const options = document.getElementById('options').value;
+        const numberOrder = document.getElementById('NumberOrder').value;
+        const addressOrder = document.getElementById('AddressOrder').value;
+        const noteOrder = document.getElementById('NoteOrder').value;
+
+        let data = {
+            name: name,
+            options: options,
+            numberorder: numberOrder,
+            addressorder: addressOrder,
+            noteorder: noteOrder
+        }
+        tg.sendData(JSON.stringify(data));
+        tg.close();
+        
+    });
+</script>
+
+</body>
+</html>
